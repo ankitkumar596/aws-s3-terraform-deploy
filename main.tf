@@ -46,7 +46,7 @@ resource "aws_s3_object" "error_html" {
   content_type = "text/html"
 }
 
-resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
+resource "aws_cloudfront_origin_access_identity" "s3_distribution" {
   comment = "Origin access identity for static website"
 }
 
@@ -100,18 +100,20 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
 resource "aws_s3_bucket_policy" "website_bucket_policy" {
   bucket = aws_s3_bucket.website_bucket.id
+
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
-        Effect   = "Allow",
-        Principal = {
-          CanonicalUser = aws_cloudfront_origin_access_identity.s3_distribution.s3_canonical_user.id
-        },
-        Action    = [
-          "s3:GetObject"
-        ],
-        Resource = "${aws_s3_bucket.website_bucket.arn}/*"
+        Effect    = "Allow",
+        Principal = "*",
+        Action    = "s3:GetObject",
+        Resource  = "${aws_s3_bucket.website_bucket.arn}/*",
+        Condition = {
+          StringEquals = {
+            "aws:userid" = aws_cloudfront_origin_access_identity.s3_distribution.iam_arn
+          }
+        }
       }
     ]
   })
