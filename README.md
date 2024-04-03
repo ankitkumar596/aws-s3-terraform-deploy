@@ -1,4 +1,4 @@
-# AWS S3 Terraform Deployment
+# Terraform AWS S3 Static Site
 
 ## Description
 This repository contains Terraform configurations to deploy infrastructure on AWS for hosting a static website using S3.
@@ -16,7 +16,12 @@ sudo terraform --version
 
 ```
 
-## Usage
+## Tech Stack and AWS Services used
+1. Terraform for IaC
+2. AWS S3
+3. CloudFront
+4. Route53 (optional)
+
 ### Clone this repository.
 
 Customize the Terraform configurations in main.tf as needed.
