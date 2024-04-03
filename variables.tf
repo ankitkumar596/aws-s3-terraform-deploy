@@ -1,10 +1,16 @@
+# Define variables for reusability and easy configuration
+variable "aws_region" {
+  default = "us-east-1"
+}
+
 variable "bucket_name" {
-  description = "This is the bucket name for S3"
-  type        = string
-  default     = "static-website-bucket-9984"
+  default = "my-static-website-bucket-67543"
 }
 
 variable "website_index_document" {
-  description = "This is the website index document"
-  default     = "index.html"
+  default = "index.html"
+}
+
+variable "website_error_document" {
+  default = "error.html"
 }
